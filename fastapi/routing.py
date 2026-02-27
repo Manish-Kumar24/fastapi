@@ -95,17 +95,6 @@ def request_response(
     async def app(scope: Scope, receive: Receive, send: Send) -> None:
         request = Request(scope, receive, send)
 
-        async def app(scope: Scope, receive: Receive, send: Send) -> None:
-            # Starts customization
-            response_awaited = False
-            async with AsyncExitStack() as request_stack:
-                scope["fastapi_inner_astack"] = request_stack
-                async with AsyncExitStack() as function_stack:
-                    scope["fastapi_function_astack"] = function_stack
-                    response = await f(request)
-                await response(scope, receive, send)
-                # Continues customization
-                response_awaited = True
             if not response_awaited:
                 raise FastAPIError(
                     "Response not awaited. There's a high chance that the "

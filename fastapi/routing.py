@@ -131,13 +131,7 @@ def websocket_session(
     """
     # assert asyncio.iscoroutinefunction(func), "WebSocket endpoints must be async"
 
-    async def app(scope: Scope, receive: Receive, send: Send) -> None:
-        session = WebSocket(scope, receive=receive, send=send)
-
-        async def app(scope: Scope, receive: Receive, send: Send) -> None:
-            async with AsyncExitStack() as request_stack:
-                scope["fastapi_inner_astack"] = request_stack
-                async with AsyncExitStack() as function_stack:
+) as function_stack:
                     scope["fastapi_function_astack"] = function_stack
                     await func(session)
 

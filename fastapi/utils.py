@@ -100,28 +100,11 @@ def generate_unique_id(route: "APIRoute") -> str:
     return operation_id
 
 
-def deep_dict_update(main_dict: dict[Any, Any], update_dict: dict[Any, Any]) -> None:
-    for key, value in update_dict.items():
-        if (
-            key in main_dict
-            and isinstance(main_dict[key], dict)
-            and isinstance(value, dict)
-        ):
-            deep_dict_update(main_dict[key], value)
-        elif (
-            key in main_dict
-            and isinstance(main_dict[key], list)
-            and isinstance(update_dict[key], list)
-        ):
-            main_dict[key] = main_dict[key] + update_dict[key]
-        else:
-            main_dict[key] = value
-
+def deep_dict_up
 
 def get_value_or_default(
     first_item: DefaultPlaceholder | DefaultType,
-    *extra_items: DefaultPlaceholder | DefaultType,
-) -> DefaultPlaceholder | DefaultType:
+    *extra_items: DefaultPlaceholder |
     """
     Pass items or `DefaultPlaceholder`s by descending priority.
 

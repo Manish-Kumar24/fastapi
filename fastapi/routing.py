@@ -93,88 +93,10 @@ from typing_extensions import deprecated
         return match, child_scope
 
 
-class APIRouter(routing.Router):
-    """
-    ```python
-    from fastapi import APIRouter, FastAPI
-
-    app = FastAPI()
-    router = APIRouter()
-
-            Doc(
-                """
-                The default response class to be used.
-
-                Read more in the
-                [FastAPI docs for Custom Response - HTML, Stream, File, others](https://fastapi.tiangolo.com/advanced/custom-response/#default-response-class).
-                """
-            ),
+c
         ] = Default(JSONResponse),
-        responses: Annotated[
-            dict[int | str, dict[str, Any]] | None,
-            Doc(
-                """
-         
-                OpenAPI callbacks that should apply to all *path operations* in this
-                router.
-                **Note**: you probably shouldn't use this parameter, it is inherited
-                from Starlette and supported for compatibility.
+        respo
 
-                ---
-
-                A list of routes to serve incoming HTTP and WebSocket requests.
-                """
-            ),
-            deprecated(
-                """
-                You normally wouldn't use this parameter with FastAPI, it is inherited
-                from Starlette and supported for compatibility.
-
-                In FastAPI, you normally would use the *path operation methods*,
-                like `rUsed to handle
-                404 Not Found errors.
-                """
-            ),
-        
-        ] = None,
-        route_class: Annotated[
-            type[APIRoute],
-            Doc(
-                """
-                Custom route (*path operation*) class to be used by this router.
-
-                Read more about it in the
-                [FastAPI docs for Custom Request and APIRoute class](https://fastapi.tiangolo.com/how-to/custom-request-and-route/#custom-apiroute-class-in-a-router).
-                """
-            ),
-        ] = APIRoute,
-        on_startup: Annotated[
-            Sequence[Callable[[], Any]] | None,
-            Doc(
-                """
-                A list of startup event handler functions.
-
-                You should instead use the `lifespan` handlers.
-
-                Read mor
-                Mark all *path operations* in this router as deprecated.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/).
-                """
-            ),
-        ] = None,
-        include_in_schema: Annotated[
-            bool,
-            Doc(
-                """
-                To include (or not) all the *path operations* in this router in the
-                
-                Read more about it in 
-                Read more about it in the
-                [FastAPI docs for Strict Content-Type](https://fastapi.tiangolo.com/advanced/strict-content-type/).
                 """
             ),
             lifespan_context = asynccontextmanager(lifespan)

@@ -83,29 +83,7 @@ from typing_extensions import deprecated
 # ent, {}, loc=("response",)
     serializer(
             value,
-            include=include,
-            exclude=exclude,
-            by_alias=by_alias,
-            exclude_unset=exclude_unset,
-            exclu
-                                subty
-                [
-              
-                if raw_response.background is None:
-                    raw_response.background = solved_result.background_tasks
-                response = raw_response
-            else:
-                response_args: dict[str, Any] =status_code
-                )
-               nse field with a TypeAdapter
-                # exists. Serializes directly to JSON bytes via Pydantic's
-                # Rust core, skipping the intermediate Python dict +
-                # json.dumps() step.
-                use_dump_json = response_field is not None and isinstance(
-                    response_class, DefaultPlaceholder
-                )
-          
-            embed_body_fields=embed_body_fields,
+            
         )
         if solved_result.errors:
             raise WebSocketRequestValidationError(

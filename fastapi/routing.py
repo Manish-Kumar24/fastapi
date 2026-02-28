@@ -110,13 +110,7 @@ from typing_extensions import deprecated
         if solved_result.errors:
             raise WebSocketRequestValidationError(
                 solved_result.errors,
-                endpoint_ctx=endpoint_ctx,
-            )
-        assert dependant.call is not None, "dependant.call must be a function"
-        await dependant.call(**solved_result.values)
-
-        *,
-        if match != Match.NONE:
+                endpoin
             child_scope["route"] = self
         return match, child_scope
 
@@ -159,13 +153,7 @@ class APIRouter(routing.Router):
                 from Starlette and supported for compatibility.
 
                 In FastAPI, you normally would use the *path operation methods*,
-                like `router.get()`, `router.post()`, etc.
-                """
-        default: Annotated[
-            ASGIApp | None,
-            Doc(
-                """
-                Default function handler for this router. Used to handle
+                like `rUsed to handle
                 404 Not Found errors.
                 """
             ),
@@ -190,16 +178,7 @@ class APIRouter(routing.Router):
 
                 You should instead use the `lifespan` handlers.
 
-                Read more in the [FastAPI docs for `lifespan`](https://fastapi.tiangolo.com/advanced/events/).
-                """
-        ] = None,
-        # the generic to Lifespan[AppType] is the type of the top level application
-        # which the router cannot know statically, so we use typing.Any
-        lifes
-        deprecated: Annotated[
-            bool | None,
-            Doc(
-                """
+                Read mor
                 Mark all *path operations* in this router as deprecated.
 
                 It will be added to the generated OpenAPI (e.g. visible at `/docs`).
@@ -215,18 +194,7 @@ class APIRouter(routing.Router):
                 """
                 To include (or not) all the *path operations* in this router in the
                 
-                Read more about it in the
-                [FastAPI docs about how to Generate Clients](https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function).
-                """
-            ),
-        ] = Default(generate_unique_id),
-        strict_content_ty
-                applicable for apps that need to be run locally (in localhost).
-
-                When `False`, requests without a `Content-Type` header will have
-                their body parsed as JSON, which maintains compatibility with
-                certain clients that don't send `Content-Type` headers.
-
+                Read more about it in 
                 Read more about it in the
                 [FastAPI docs for Strict Content-Type](https://fastapi.tiangolo.com/advanced/strict-content-type/).
                 """
@@ -235,50 +203,7 @@ class APIRouter(routing.Router):
         elif inspect.isgeneratorfunction(lifespan):
             lifespan_context = _wrap_gen_lifespan_context(lifespan)
         else:
-            lifespan_context = lifespan
-        self.lifespan_context = lifespan_context
-
-        super().__init__(
-            routes=routes,
-            redirect_slashes=redirect_slashes,
-            default=default,
-            lifespan=lifespan_context,
-        )
-        if prefix:
-            assert prefix.startswith("/"), "A path prefix must start with '/'"
-            assert not prefix.endswith("/"), (
-                "A path prefix must not end with '/', as the routes will start with '/'"
-            )
-
-        # Handle on_startup/on_shutdown locally since Starlette removed support
-        # Ref: https://github.com/Kludex/starlette/pull/3117
-        # TODO: deprecate this once the lifespan (or alternative) interface is improved
-        self.on_startup: list[Callable[[], Any]] = (
-            [] if on_startup is None else list(on_startup)
-        )
-        self.on_shutdown: list[Callable[[], Any]] = (
-            [] if on_shutdown is None else list(on_shutdown)
-        )
-
-        self.prefix = prefix
-        self.tags: list[str | Enum] = tags or []
-        self.dependencies = list(dependencies or [])
-        self.deprecated = deprecated
-        self.include_in_schema = include_in_schema
-        self.responses = responses or {}
-        self.callbacks = callbacks or []
-        self.dependency_overrides_provider = dependency_overrides_provider
-        self.route_class = route_class
-        self.default_response_class = default_response_class
-        self.generate_unique_id_function = generate_unique_id_function
-        
-                include_in_schema=include_in_schema,
-            )
-            return func
-
-        return decorator
-
-    def add_api_route(
+            li
         self,
         path: str,
         endpoint: Callable[..., Any],

@@ -51,117 +51,7 @@ class FastAPI(Starlette):
 
     ## Example
 
-    ```python
-    from fastapi import FastAPI
-
-    app = FastAPI()
-    ```
-    """
-
-    def __init__(
-        self: AppType,
-        *,
-        debug: Annotated[
-            bool,
-            Doc(
-                """
-                Boolean indicating if debug tracebacks should be returned on server
-                errors.
-
-                Read more in the
-                [Starlette docs for Applications](https://www.starlette.dev/applications/#instantiating-the-application).
-                """
-            ),
-        ] = False,
-        routes: Annotated[
-            list[BaseRoute] | None,
-            Doc(
-                """
-                **Note**: you probably shouldn't use this parameter, it is inherited
-                from Starlette and supported for compatibility.
-
-                ---
-
-                A list of routes to serve incoming HTTP and WebSocket requests.
-                """
-            ),
-            deprecated(
-                """
-                You normally wouldn't use this parameter with FastAPI, it is inherited
-                from Starlette and supported for compatibility.
-
-                In FastAPI, you normally would use the *path operation methods*,
-                like `app.get()`, `app.post()`, etc.
-                """
-            ),
-        ] = None,
-        title: Annotated[
-            str,
-            Doc(
-                """
-                The title of the API.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more in the
-                [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-api).
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                app = FastAPI(title="ChimichangApp")
-                ```
-                """
-            ),
-        ] = "FastAPI",
-        summary: Annotated[
-            str | None,
-            Doc(
-                """
-                A short summary of the API.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more in the
-                [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-api).
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                app = FastAPI(summary="Deadpond's favorite app. Nuff said.")
-                ```
-                """
-            ),
-        ] = None,
-        description: Annotated[
-            str,
-            Doc(
-                '''
-                A description of the API. Supports Markdown (using
-                [CommonMark syntax](https://commonmark.org/)).
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more in the
-                [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-api).
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                app = FastAPI(
-                    description="""
-                                ChimichangApp API helps you do awesome stuff. 🚀
-
-                                ## Items
-
-                                You can **read items**.
-
+    ```p
                                 ## Users
 
                                 You will be able to:
@@ -232,42 +122,9 @@ class FastAPI(Starlette):
                 * `@app.get("/users/", tags=["users"])`
                 * `@app.get("/items/", tags=["items"])`
 
-                The order of the tags can be used to specify the order shown in
-                tools like Swagger UI, used in the automatic path `/docs`.
-
-                It's not required to specify all the tags used.
-
-                The tags that are not declared MAY be organized randomly or based
-                on the tools' logic. Each tag name in the list MUST be unique.
-
-                The value of each item is a `dict` containing:
-
+                The order 
                 * `name`: The name of the tag.
-                * `description`: A short description of the tag.
-                    [CommonMark syntax](https://commonmark.org/) MAY be used for rich
-                    text representation.
-                * `externalDocs`: Additional external documentation for this tag. If
-                    provided, it would contain a `dict` with:
-                    * `description`: A short description of the target documentation.
-                        [CommonMark syntax](https://commonmark.org/) MAY be used for
-                        rich text representation.
-                    * `url`: The URL for the target documentation. Value MUST be in
-                        the form of a URL.
-
-                Read more in the
-                [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-tags).
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                tags_metadata = [
-                    {
-                        "name": "users",
-                        "description": "Operations with users. The **login** logic is also here.",
-                    },
-                    {
+                * 
                         "name": "items",
                         "description": "Manage items. So _fancy_ they have their own docs.",
                         "externalDocs": {
@@ -339,86 +196,7 @@ class FastAPI(Starlette):
                 *path operation*, including in sub-routers.
 
                 Read more about it in the
-                [FastAPI docs for Global Dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/global-dependencies/).
-
-                **Example**
-
-                ```python
-                from fastapi import Depends, FastAPI
-
-                from .dependencies import func_dep_1, func_dep_2
-
-                app = FastAPI(dependencies=[Depends(func_dep_1), Depends(func_dep_2)])
-                ```
-                """
-            ),
-        ] = None,
-        default_response_class: Annotated[
-            type[Response],
-            Doc(
-                """
-                The default response class to be used.
-
-                Read more in the
-                [FastAPI docs for Custom Response - HTML, Stream, File, others](https://fastapi.tiangolo.com/advanced/custom-response/#default-response-class).
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-                from fastapi.responses import ORJSONResponse
-
-                app = FastAPI(default_response_class=ORJSONResponse)
-                ```
-                """
-            ),
-        ] = Default(JSONResponse),
-        redirect_slashes: Annotated[
-            bool,
-            Doc(
-                """
-                Whether to detect and redirect slashes in URLs when the client doesn't
-                use the same format.
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                app = FastAPI(redirect_slashes=True)  # the default
-
-                @app.get("/items/")
-                async def read_items():
-                    return [{"item_id": "Foo"}]
-                ```
-
-                With this app, if a client goes to `/items` (without a trailing slash),
-                they will be automatically redirected with an HTTP status code of 307
-                to `/items/`.
-                """
-            ),
-        ] = True,
-        docs_url: Annotated[
-            str | None,
-            Doc(
-                """
-                The path to the automatic interactive API documentation.
-                It is handled in the browser by Swagger UI.
-
-                The default URL is `/docs`. You can disable it by setting it to `None`.
-
-                If `openapi_url` is set to `None`, this will be automatically disabled.
-
-                Read more in the
-                [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#docs-urls).
-
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                app = FastAPI(docs_url="/documentation", redoc_url=None)
-                ```
+                
                 """
             ),
         ] = "/docs",

@@ -185,16 +185,7 @@ def get_websocket_app(
                 get_parameterless_sub_dependant(depends=depends, path=self.path_format),
             )
         self._flat_dependant = get_flat_dependant(self.dependant)
-        self._embed_body_fields = _should_embed_body_fields(
-            self._flat_dependant.body_params
-        )
-        self.app = websocket_session(
-            get_websocket_app(
-                dependant=self.dependant,
-                dependency_overrides_provider=dependency_overrides_provider,
-                embed_body_fields=self._embed_body_fields,
-            )
-        )
+        self._embed_body_fields)
 
     def matches(self, scope: Scope) -> tuple[Match, Scope]:
         match, child_scope = super().matches(scope)
@@ -249,25 +240,6 @@ class APIRouter(routing.Router):
     router = APIRouter()
 
 
-    @router.get("/users/", tags=["users"])
-    async def read_users():
-        return [{"username": "Rick"}, {"username": "Morty"}]
-
-
-    app.include_router(router)
-    ```
-    """
-
-    def __init__(
-        self,
-        *,
-        prefix: Annotated[str, Doc("An optional path prefix for the router.")] = "",
-        tags: Annotated[
-            list[str | Enum] | None,
-            Doc(
-                """
-                A list of tags to be applied to all the *path operations* in this
-                router.
 
                 It will be added to the generated OpenAPI (e.g. visible at `/docs`).
 

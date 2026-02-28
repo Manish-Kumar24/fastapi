@@ -179,20 +179,7 @@ def _wrap_gen_lifespan_context(
 
 def _merge_lifespan_context(
     original_context: Lifespan[Any], nested_context: Lifespan[Any]
-) -> Lifespan[Any]:
-    @asynccontextmanager
-    async def merged_lifespan(
-        app: AppType,
-    ) -> AsyncIterator[Mapping[str, Any] | None]:
-        async with original_context(app) as maybe_original_state:
-            async with nested_context(app) as maybe_nested_state:
-                if maybe_nested_state is None and maybe_original_state is None:
-                    yield None  # old ASGI compatibility
-                else:
-                    yield {**(maybe_nested_state or {}), **(maybe_original_state or {})}
-
-    return merged_lifespan  # type: ignore[return-value]
-
+) 
 
 class _DefaultLifespan:
     """
@@ -214,20 +201,7 @@ class _DefaultLifespan:
     async def __aexit__(self, *exc_info: object) -> None:
         await self._router._shutdown()
 
-    def __call__(self: _T, app: object) -> _T:
-        return self
-
-
-# Cache for endpoint context to avoid re-extracting on every request
-_endpoint_context_cache: dict[int, EndpointContext] = {}
-
-
-def _extract_endpoint_context(func: Any) -> EndpointContext:
-    """Extract endpoint context with caching to avoid repeated file I/O."""
-    func_id = id(func)
-
-    if func_id in _endpoint_context_cache:
-        return _endpoint_context_cache[func_id]
+    def func_id]
 
     try:
         ctx: EndpointContext = {}
@@ -247,18 +221,6 @@ def _extract_endpoint_context(func: Any) -> EndpointContext:
 
 async def serialize_response(
     *,
-    field: ModelField | None = None,
-    response_content: Any,
-    include: IncEx | None = None,
-    exclude: IncEx | None = None,
-    by_alias: bool = True,
-    exclude_unset: bool = False,
-    exclude_defaults: bool = False,
-    exclude_none: bool = False,
-    is_coroutine: bool = True,
-    endpoint_ctx: EndpointContext | None = None,
-    dump_json: bool = False,
-) -> Any:
     if field:
         if is_coroutine:
             value, errors = field.validate(response_content, {}, loc=("response",))

@@ -208,49 +208,7 @@ def get_request_handler(
         except json.JSONDecodeError as e:
             validation_error = RequestValidationError(
                 [
-                    {
-                        "type": "json_invalid",
-                        "loc": ("body", e.pos),
-                        "msg": "JSON decode error",
-                        "input": {},
-                        "ctx": {"error": e.msg},
-                    }
-                ],
-                body=e.doc,
-                endpoint_ctx=endpoint_ctx,
-            )
-            raise validation_error from e
-        except HTTPException:
-            # If a middleware raises an HTTPException, it should be raised again
-            raise
-        except Exception as e:
-            http_error = HTTPException(
-                status_code=400, detail="There was an error parsing the body"
-            )
-            raise http_error from e
-
-        # Solve dependencies and run path operation function, auto-closing dependencies
-        errors: list[Any] = []
-        async_exit_stack = request.scope.get("fastapi_inner_astack")
-        assert isinstance(async_exit_stack, AsyncExitStack), (
-            "fastapi_inner_astack not found in request scope"
-        )
-        solved_result = await solve_dependencies(
-            request=request,
-            dependant=dependant,
-            body=body,
-            dependency_overrides_provider=dependency_overrides_provider,
-            async_exit_stack=async_exit_stack,
-            embed_body_fields=embed_body_fields,
-        )
-        errors = solved_result.errors
-        if not errors:
-            raw_response = await run_endpoint_function(
-                dependant=dependant,
-                values=solved_result.values,
-                is_coroutine=is_coroutine,
-            )
-            if isinstance(raw_response, Response):
+              
                 if raw_response.background is None:
                     raw_response.background = solved_result.background_tasks
                 response = raw_response

@@ -143,70 +143,12 @@ async def serialize_response(
         )
 
     else:
-        return jsonable_encoder(response_content)
-
-
-async def run_endpoint_function(
-    *, dependant: Depen
-
-def get_request_handler(
-    dependant: Dependant,
-    body_field: ModelField | None = None,
-    status_code: int | None = None,
+        return jsonabe,
     response_class: type[Response] | DefaultPlaceholder = Default(JSONResponse),
-    response_field: ModelField | None = None,
-    response_model_include: IncEx | None = None,
-    response_model_exclude: IncEx | None = None,
-    response_model_by_alias: bool = True,
-    response_model_exclude_unset: bool = False,
-    response_model_exclude_defaults: bool = False,
-    response_model_exclude_none: bool = False,
-    dependency_overrides_provider: Any | None = None,
-    embed_body_fields: bool = False,
-    strict_content_type: bool | DefaultPlaceholder = Default(True),
-) -> Callable"fastapi_middleware_astack not found in request scope"
-        )
-
-        # Extract endpoint context for error messages
-        endpoint_ctx = (
+    response_field: Model
             _extract_endpoint_context(dependant.call)
-            if dependant.call
-            else EndpointContext()
-        )
-
-        if dependant.path:
-            # For mounted sub-apps, include the mount path prefix
-            mount_path = request.scope.get("root_path", "").rstrip("/")
-            endpoint_ctx["path"] = f"{request.method} {mount_path}{dependant.path}"
-
-        # Read body and auto-close files
-        try:
-            body: Any = None
-            if body_field:
-                if is_body_form:
-                    body = await request.form()
-                    file_stack.push_async_callback(body.close)
-                else:
-                    body_bytes = await request.body()
-                    if body_bytes:
-                        json_body: Any = Undefined
-                        content_type_value = request.headers.get("content-type")
-                        if not content_type_value:
-                            if not actual_strict_content_type:
-                                json_body = await request.json()
-                        else:
-                            message = email.message.Message()
-                            message["content-type"] = content_type_value
-                            if message.get_content_maintype() == "application":
-                                subtype = message.get_content_subtype()
-                                if subtype == "json" or subtype.endswith("+json"):
-                                    json_body = await request.json()
-                        if json_body != Undefined:
-                            body = json_body
-                        else:
-                            body = body_bytes
-        except json.JSONDecodeError as e:
-            validation_error = RequestValidationError(
+            if dependant.calication":
+                                subty
                 [
               
                 if raw_response.background is None:

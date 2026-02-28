@@ -104,16 +104,7 @@ def request_response(
             exclude=exclude,
             by_alias=by_alias,
             exclude_unset=exclude_unset,
-            exclude_defaults=exclude_defaults,
-            exclude_none=exclude_none,
-        )
-
-    else:
-        return jsonabe,
-    response_class: type[Response] | DefaultPlaceholder = Default(JSONResponse),
-    response_field: Model
-            _extract_endpoint_context(dependant.call)
-            if dependant.calication":
+            exclu
                                 subty
                 [
               
@@ -121,13 +112,7 @@ def request_response(
                     raw_response.background = solved_result.background_tasks
                 response = raw_response
             else:
-                response_args: dict[str, Any] = {
-                    "background": solved_result.background_tasks
-                }
-                # If status_code was set, use it, otherwise use the default from the
-                # response class, in the case of redirect it's 307
-                current_status_code = (
-                    status_code if status_code else solved_result.response.status_code
+                response_args: dict[str, Any] =status_code
                 )
                nse field with a TypeAdapter
                 # exists. Serializes directly to JSON bytes via Pydantic's
@@ -155,13 +140,6 @@ def get_websocket_app(
     dependant: Dependant,
     dependency_overrides_provider: Any | None = None,
     embed_body_fields: bool = False,
-) -> Callable[[WebSocket], Coroutine[Any, Any, Any]]:
-    async def app(websosyncExitStack), (
-            "fastapi_inner_astack not found in request scope"
-        )
-        solved_result = await solve_dependencies(
-            request=websocket,
-            dependant=dependant,
             dependency_overrides_provider=dependency_overrides_provider,
             async_exit_stack=async_exit_stack,
             embed_body_fields=embed_body_fields,
@@ -190,16 +168,6 @@ def get_websocket_app(
     def matches(self, scope: Scope) -> tuple[Match, Scope]:
         match, child_scope = super().matches(scope)
         if match != Match.NONE:
-            child_scope["route"] = self
-        return match, child_scope
-
-
-class APIRoute(rout
-        self.app = request_response(self.get_route_handler())
-
-    def get_route_handler(self) -> Callable[[Request], Coroutine[Any, Any, Response]]:
-        return get_request_handler(
-            dependant=self.dependant,
             body_field=self.body_field,
             status_code=self.status_code,
             response_class=self.response_class,
@@ -241,18 +209,7 @@ class APIRouter(routing.Router):
 
 
 
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/).
-                """
-            ),
-        ] = None,
-        dependencies: Annotated[
-            Sequence[params.Depends] | None,
-            Doc(
-                """
-                A list of dependencies (using `Depends()`) to be applied to all the
+                It will bell the
                 *path operations* in this router.
 
                 Read more about it in the

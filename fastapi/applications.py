@@ -42,62 +42,11 @@ from typing_extensions import deprecated
 AppType = TypeVar("AppType", bound="FastAPI")
 
 
-class FastAPI(Starlette):
-    """
-    `FastAPI` app class, the main entrypoint to use FastAPI.
 
-    Read more in the
-    [FastAPI docs for First Steps](https://fastapi.tiangolo.com/tutorial/first-steps/).
-
-    ## Example
-
-    ```p
-                                ## Users
-
-                                You will be able to:
-
-                                * **Create users** (_not implemented_).
-                                * **Read users** (_not implemented_).
-
-                                """
-                )
-                ```
-                '''
-            ),
-        ] = "",
-        version: Annotated[
-            str,
-            Doc(
-                """
-                The version of the API.
-
-                **Note** This is the version of your application, not the version of
-                the OpenAPI specification nor the version of FastAPI being used.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more in the
+                            
                 [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-api).
 
-                **Example**
-
-                ```python
-                from fastapi import FastAPI
-
-                app = FastAPI(version="0.0.1")
-                ```
-                """
-            ),
-        ] = "0.1.0",
-        openapi_url: Annotated[
-            str | None,
-            Doc(
-                """
-                The URL where the OpenAPI schema will be served from.
-
-                If you set it to `None`, no OpenAPI schema will be served publicly, and
-                the default automatic endpoints `/docs` and `/redoc` will also be
-                disabled.
+                **
 
                 Read more in the
                 [FastAPI docs for Metadata and Docs URLs](https://fastapi.tiangolo.com/tutorial/metadata/#openapi-url).
@@ -123,19 +72,6 @@ class FastAPI(Starlette):
                 * `@app.get("/items/", tags=["items"])`
 
                 The order 
-                * `name`: The name of the tag.
-                * 
-                        "name": "items",
-                        "description": "Manage items. So _fancy_ they have their own docs.",
-                        "externalDocs": {
-                            "description": "Items external docs",
-                            "url": "https://fastapi.tiangolo.com/",
-                        },
-                    },
-                ]
-
-                app = FastAPI(openapi_tags=tags_metadata)
-                ```
                 """
             ),
         ] = None,
@@ -188,19 +124,7 @@ class FastAPI(Starlette):
                 """
             ),
         ] = None,
-        dependencies: Annotated[
-            Sequence[Depends] | None,
-            Doc(
-                """
-                A list of global dependencies, they will be applied to each
-                *path operation*, including in sub-routers.
-
-                Read more about it in the
-                
-                """
-            ),
-        ] = "/docs",
-        redoc_url: Annotated[
+        dependencie
             str | None,
             Doc(
                 """

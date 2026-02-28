@@ -169,17 +169,7 @@ class APIRouter(routing.Router):
                 404 Not Found errors.
                 """
             ),
-        ] = None,
-        dependency_overrides_provider: Annotated[
-            Any | None,
-            Doc(
-                """
-                Only used internally by FastAPI to handle dependency overrides.
-
-                You shouldn't need to use it. It normally points to the `FastAPI` app
-                object.
-                """
-            ),
+        
         ] = None,
         route_class: Annotated[
             type[APIRoute],
@@ -205,18 +195,7 @@ class APIRouter(routing.Router):
         ] = None,
         # the generic to Lifespan[AppType] is the type of the top level application
         # which the router cannot know statically, so we use typing.Any
-        lifespan: Annotated[
-            Lifespan[Any] | None,
-            Doc(
-                """
-                A `Lifespan` context manager handler. This replaces `startup` and
-                `shutdown` functions with a single context manager.
-
-                Read more in the
-                [FastAPI docs for `lifespan`](https://fastapi.tiangolo.com/advanced/events/).
-                """
-            ),
-        ] = None,
+        lifes
         deprecated: Annotated[
             bool | None,
             Doc(
@@ -241,18 +220,7 @@ class APIRouter(routing.Router):
                 """
             ),
         ] = Default(generate_unique_id),
-        strict_content_type: Annotated[
-            bool,
-            Doc(
-                """
-                Enable strict checking for request Content-Type headers.
-
-                When `True` (the default), requests with a body that do not include
-                a `Content-Type` header will **not** be parsed as JSON.
-
-                This prevents potential cross-site request forgery (CSRF) attacks
-                that exploit the browser's ability to send requests without a
-                Content-Type header, bypassing CORS preflight checks. In particular
+        strict_content_ty
                 applicable for apps that need to be run locally (in localhost).
 
                 When `False`, requests without a `Content-Type` header will have
@@ -263,13 +231,6 @@ class APIRouter(routing.Router):
                 [FastAPI docs for Strict Content-Type](https://fastapi.tiangolo.com/advanced/strict-content-type/).
                 """
             ),
-        ] = Default(True),
-    ) -> None:
-        # Determine the lifespan context to use
-        if lifespan is None:
-            # Use the default lifespan that runs on_startup/on_shutdown handlers
-            lifespan_context: Lifespan[Any] = _DefaultLifespan(self)
-        elif inspect.isasyncgenfunction(lifespan):
             lifespan_context = asynccontextmanager(lifespan)
         elif inspect.isgeneratorfunction(lifespan):
             lifespan_context = _wrap_gen_lifespan_context(lifespan)
@@ -310,21 +271,7 @@ class APIRouter(routing.Router):
         self.route_class = route_class
         self.default_response_class = default_response_class
         self.generate_unique_id_function = generate_unique_id_function
-        self.strict_content_type = strict_content_type
-
-    def route(
-        self,
-        path: str,
-        methods: Collection[str] | None = None,
-        name: str | None = None,
-        include_in_schema: bool = True,
-    ) -> Callable[[DecoratedCallable], DecoratedCallable]:
-        def decorator(func: DecoratedCallable) -> DecoratedCallable:
-            self.add_route(
-                path,
-                func,
-                methods=methods,
-                name=name,
+        
                 include_in_schema=include_in_schema,
             )
             return func

@@ -80,15 +80,7 @@ from typing_extensions import deprecated
 
 
 # Copy of starlette.routing.request_response modified to include the
-# dependencies' AsyncExitStack
-def request_response(
-    func: Callable[[Request], Awaitable[Response] | Response],
-) -> ASGIApp:
-    """
-    Takes a function or coroutine `func(request) -> response`,
-  
-            value, errors = await run_in_threadpool(
-                field.validate, response_content, {}, loc=("response",)
+# ent, {}, loc=("response",)
     serializer(
             value,
             include=include,
@@ -112,13 +104,7 @@ def request_response(
                 use_dump_json = response_field is not None and isinstance(
                     response_class, DefaultPlaceholder
                 )
-                content = await serialize_response(
-                    field=response_field,
-                    response_content=raw_response,
-                    include=response_model_include,
-                    exclude=response_model_exclude,
-                    by_alias=response_model_by_alias,
-                    exclude_unset=response_model_exclude_unset,
+                coe_model_exclude_unset,
                     exclude_defaults=response_model_exclude_defaults,
                     exclude_none=response_model_exclude_none,
                     is_coroutine=is_coroutine,
@@ -144,15 +130,6 @@ def get_websocket_app(
         await dependant.call(**solved_result.values)
 
         *,
-        self.path_regex, self.path_format, self.param_convertors = compile_path(path)
-        self.dependant = get_dependant(
-            path=self.path_format, call=self.endpoint, scope="function"
-        )
-        for depends in self.dependencies[::-1]:
-            self.dependant.d
-
-    def matches(self, scope: Scope) -> tuple[Match, Scope]:
-        match, child_scope = super().matches(scope)
         if match != Match.NONE:
             child_scope["route"] = self
         return match, child_scope
@@ -175,18 +152,6 @@ class APIRouter(routing.Router):
     app = FastAPI()
     router = APIRouter()
 
-
-
-                It will bell the
-                *path operations* in this router.
-
-                Read more about it in the
-                [FastAPI docs for Bigger Applications - Multiple Files](https://fastapi.tiangolo.com/tutorial/bigger-applications/#include-an-apirouter-with-a-custom-prefix-tags-responses-and-dependencies).
-                """
-            ),
-        ] = None,
-        default_response_class: Annotated[
-            type[Response],
             Doc(
                 """
                 The default response class to be used.
@@ -200,22 +165,7 @@ class APIRouter(routing.Router):
             dict[int | str, dict[str, Any]] | None,
             Doc(
                 """
-                Additional responses to be shown in OpenAPI.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Additional Responses in OpenAPI](https://fastapi.tiangolo.com/advanced/additional-responses/).
-
-                And in the
-                [FastAPI docs for Bigger Applications](https://fastapi.tiangolo.com/tutorial/bigger-applications/#include-an-apirouter-with-a-custom-prefix-tags-responses-and-dependencies).
-                """
-            ),
-        ] = None,
-        callbacks: Annotated[
-            list[BaseRoute] | None,
-            Doc(
-                """
+         
                 OpenAPI callbacks that should apply to all *path operations* in this
                 router.
 

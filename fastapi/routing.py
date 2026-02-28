@@ -93,33 +93,8 @@ def request_response(
     )
 
     async def app(scope: Scope, receive: Receive, send: Send) -> None:
-        request = Request(scope, receive, send)
-request)(scope, receive, send)
+ 
 
-    return app
-
-
-# Copy 
-    return app
-
-
-_T = TypeVar("_T")
-
-
-# ntext manager.
-
-    Thi
-
-    def func_id]
-
-    
-
-
-async def serialize_response(
-    *,
-    if field:
-        if is_coroutine:
-            value, errors = field.validate(response_content, {}, loc=("response",))
         else:
             value, errors = await run_in_threadpool(
                 field.validate, response_content, {}, loc=("response",)
@@ -171,19 +146,7 @@ async def serialize_response(
                     exclude_defaults=response_model_exclude_defaults,
                     exclude_none=response_model_exclude_none,
                     is_coroutine=is_coroutine,
-                    endpoint_ctx=endpoint_ctx,
-                    dump_json=use_dump_json,
-                )
-                if use_dump_json:
-                    response = Response(
-                        content=content,
-                        media_type="application/json",
-                        **res
-            raise validation_error
-
-        # Return response
-        assert response
-        return response
+                 
 
     return app
 
@@ -211,14 +174,6 @@ def get_websocket_app(
         assert dependant.call is not None, "dependant.call must be a function"
         await dependant.call(**solved_result.values)
 
-    return app
-
-
-class APIWebSocketRoute(routing.WebSocketRoute):
-    def __init__(
-        self,
-        path: str,
-        endpoint: Callable[..., Any],
         *,
         self.path_regex, self.path_format, self.param_convertors = compile_path(path)
         self.dependant = get_dependant(
@@ -248,10 +203,7 @@ class APIWebSocketRoute(routing.WebSocketRoute):
         return match, child_scope
 
 
-class APIRoute(routing.Route):
-    def __init__(
-        self,
-        
+class APIRoute(rout
         self.app = request_response(self.get_route_handler())
 
     def get_route_handler(self) -> Callable[[Request], Coroutine[Any, Any, Response]]:

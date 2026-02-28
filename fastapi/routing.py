@@ -86,16 +86,7 @@ def request_response(
 ) -> ASGIApp:
     """
     Takes a function or coroutine `func(request) -> response`,
-    and returns an ASGI application.
-    """
-    f: Callable[[Request], Awaitable[Response]] = (
-        func if is_async_callable(func) else functools.partial(run_in_threadpool, func)  # type:ignore
-    )
-
-    async def app(scope: Scope, receive: Receive, send: Send) -> None:
- 
-
-        else:
+  
             value, errors = await run_in_threadpool(
                 field.validate, response_content, {}, loc=("response",)
     serializer(
@@ -158,30 +149,7 @@ def get_websocket_app(
             path=self.path_format, call=self.endpoint, scope="function"
         )
         for depends in self.dependencies[::-1]:
-            self.dependant.dependencies.insert(
-                0,
-                get_parameterless_sub_dependant(depends=depends, path=self.path_format),
-            )
-        self._flat_dependant = get_flat_dependant(self.dependant)
-        self._embed_body_fields)
-
-    def matches(self, scope: Scope) -> tuple[Match, Scope]:
-        match, child_scope = super().matches(scope)
-        if match != Match.NONE:
-            body_field=self.body_field,
-            status_code=self.status_code,
-            response_class=self.response_class,
-            response_field=self.response_field,
-            response_model_include=self.response_model_include,
-            response_model_exclude=self.response_model_exclude,
-            response_model_by_alias=self.response_model_by_alias,
-            response_model_exclude_unset=self.response_model_exclude_unset,
-            response_model_exclude_defaults=self.response_model_exclude_defaults,
-            response_model_exclude_none=self.response_model_exclude_none,
-            dependency_overrides_provider=self.dependency_overrides_provider,
-            embed_body_fields=self._embed_body_fields,
-            strict_content_type=self.strict_content_type,
-        )
+            self.dependant.d
 
     def matches(self, scope: Scope) -> tuple[Match, Scope]:
         match, child_scope = super().matches(scope)

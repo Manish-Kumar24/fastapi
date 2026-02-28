@@ -104,21 +104,7 @@ from typing_extensions import deprecated
                 use_dump_json = response_field is not None and isinstance(
                     response_class, DefaultPlaceholder
                 )
-                coe_model_exclude_unset,
-                    exclude_defaults=response_model_exclude_defaults,
-                    exclude_none=response_model_exclude_none,
-                    is_coroutine=is_coroutine,
-                 
-
-    return app
-
-
-def get_websocket_app(
-    dependant: Dependant,
-    dependency_overrides_provider: Any | None = None,
-    embed_body_fields: bool = False,
-            dependency_overrides_provider=dependency_overrides_provider,
-            async_exit_stack=async_exit_stack,
+          
             embed_body_fields=embed_body_fields,
         )
         if solved_result.errors:
@@ -137,15 +123,6 @@ def get_websocket_app(
 
 class APIRouter(routing.Router):
     """
-    `APIRouter` class, used to group *path operations*, for example to structure
-    an app in multiple files. It would then be included in the `FastAPI` app, or
-    in another `APIRouter` (ultimately included in the app).
-
-    Read more about it in the
-    [FastAPI docs for Bigger Applications - Multiple Files](https://fastapi.tiangolo.com/tutorial/bigger-applications/).
-
-    ## Example
-
     ```python
     from fastapi import APIRouter, FastAPI
 
@@ -168,18 +145,6 @@ class APIRouter(routing.Router):
          
                 OpenAPI callbacks that should apply to all *path operations* in this
                 router.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for OpenAPI Callbacks](https://fastapi.tiangolo.com/advanced/openapi-callbacks/).
-                """
-            ),
-        ] = None,
-        routes: Annotated[
-            list[BaseRoute] | None,
-            Doc(
-                """
                 **Note**: you probably shouldn't use this parameter, it is inherited
                 from Starlette and supported for compatibility.
 
@@ -196,17 +161,6 @@ class APIRouter(routing.Router):
                 In FastAPI, you normally would use the *path operation methods*,
                 like `router.get()`, `router.post()`, etc.
                 """
-            ),
-        ] = None,
-        redirect_slashes: Annotated[
-            bool,
-            Doc(
-                """
-                Whether to detect and redirect slashes in URLs when the client doesn't
-                use the same format.
-                """
-            ),
-        ] = True,
         default: Annotated[
             ASGIApp | None,
             Doc(
@@ -248,20 +202,6 @@ class APIRouter(routing.Router):
 
                 Read more in the [FastAPI docs for `lifespan`](https://fastapi.tiangolo.com/advanced/events/).
                 """
-            ),
-        ] = None,
-        on_shutdown: Annotated[
-            Sequence[Callable[[], Any]] | None,
-            Doc(
-                """
-                A list of shutdown event handler functions.
-
-                You should instead use the `lifespan` handlers.
-
-                Read more in the
-                [FastAPI docs for `lifespan`](https://fastapi.tiangolo.com/advanced/events/).
-                """
-            ),
         ] = None,
         # the generic to Lifespan[AppType] is the type of the top level application
         # which the router cannot know statically, so we use typing.Any
@@ -295,25 +235,7 @@ class APIRouter(routing.Router):
             Doc(
                 """
                 To include (or not) all the *path operations* in this router in the
-                generated OpenAPI.
-
-                This affects the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Query Parameters and String Validations](https://fastapi.tiangolo.com/tutorial/query-params-str-validations/#exclude-parameters-from-openapi).
-                """
-            ),
-        ] = True,
-        generate_unique_id_function: Annotated[
-            Callable[[APIRoute], str],
-            Doc(
-                """
-                Customize the function used to generate unique IDs for the *path
-                operations* shown in the generated OpenAPI.
-
-                This is particularly useful when automatically generating clients or
-                SDKs for your API.
-
+                
                 Read more about it in the
                 [FastAPI docs about how to Generate Clients](https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function).
                 """

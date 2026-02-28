@@ -86,55 +86,7 @@ from typing_extensions import deprecated
             
         
             description=description,
-            response_description=response_description,
-            responses=combined_responses,
-            deprecated=deprecated or self.deprecated,
-            meth
-            generate_unique_id_function=current_generate_unique_id,
-            strict_content_type=get_value_or_default(
-                strict_content_type, self.strict_content_type
-            ),
-        )
-        self.routes.append(route)
-
-    def api_route(
-        self,
-        path: str,
-        *,
-        response_model: Any = Default(None),
-        status_code: int | None = None,
-        tags: list[str | Enum] | None = None,
-        dependencies: Sequence[params.Depends] | None = None,
-        summary: str | None = None,
-        description: str | None = None,
-        response_description: str = "Successful Response",
-        responses: dict[int | str, dict[str, Any]] | None = None,
-        deprecated: bool | None = None,
-        methods: list[str] | None = None,
-        operation_id: str | None = None,
-        response_model_include: IncEx | None = None,
-        response_model_exclude: IncEx | None = None,
-        response_model_by_alias: bool = True,
-        response_model_exclude_unset: bool = False,
-        response_model_exclude_defaults: bool = False,
-        response_model_exclude_none: bool = False,
-        include_in_schema: bool = True,
-        response_class: type[Response] = Default(JSONResponse),
-        name: str | None = None,
-        callbacks: list[BaseRoute] | None = None,
-        openapi_extra: dict[str, Any] | None = None,
-        generate_unique_id_function: Callable[[APIRoute], str] = Default(
-            generate_unique_id
-        ),
-    ) -> Callable[[DecoratedCallable], DecoratedCallable]:
-        def decorator(func: DecoratedCallable) -> DecoratedCallable:
-            self.add_api_route(
-                path,
-                func,
-                response_model=response_model,
-                status_code=status_code,
-                tags=tags,
-                dependencies=dependencies,
+            respons
                 summary=summary,
                 description=description,
                 response_description=response_description,

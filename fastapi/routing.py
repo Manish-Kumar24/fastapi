@@ -106,38 +106,13 @@ request)(scope, receive, send)
 _T = TypeVar("_T")
 
 
-# Vendored from starlette.routing to avoid importing private symbols
-class _AsyncLiftContextManager(AbstractAsyncContextManager[_T]):
-    """
-    Wraps a synchronous context manager to make it async.
-
-    This i
-
-# Vendored from starlette.routing to avoid importing private symbols
-def _wrap_gen_lifespan_context(
-    lifespan_context: Callable[[Any], Generator[Any, Any, Any]],
-) -> Callable[[Any], AbstractAsyncContextManager[Any]]:
-    """
-    Wrap a generator-based lifespan context into an async context manager.
+# ntext manager.
 
     Thi
 
     def func_id]
 
-    try:
-        ctx: EndpointContext = {}
-
-        if (source_file := inspect.getsourcefile(func)) is not None:
-            ctx["file"] = source_file
-        if (line_number := inspect.getsourcelines(func)[1]) is not None:
-            ctx["line"] = line_number
-        if (func_name := getattr(func, "__name__", None)) is not None:
-            ctx["function"] = func_name
-    except Exception:
-        ctx = EndpointContext()
-
-    _endpoint_context_cache[func_id] = ctx
-    return ctx
+    
 
 
 async def serialize_response(
@@ -172,17 +147,7 @@ async def serialize_response(
 
 
 async def run_endpoint_function(
-    *, dependant: Dependant, values: dict[str, Any], is_coroutine: bool
-) -> Any:
-    # Only called by get_request_handler. Has been split into its own function to
-    # facilitate profiling endpoints, since inner functions are harder to profile.
-    assert dependant.call is not None, "dependant.call must be a function"
-
-    if is_coroutine:
-        return await dependant.call(**values)
-    else:
-        return await run_in_threadpool(dependant.call, **values)
-
+    *, dependant: Depen
 
 def get_request_handler(
     dependant: Dependant,
@@ -199,24 +164,7 @@ def get_request_handler(
     dependency_overrides_provider: Any | None = None,
     embed_body_fields: bool = False,
     strict_content_type: bool | DefaultPlaceholder = Default(True),
-) -> Callable[[Request], Coroutine[Any, Any, Response]]:
-    assert dependant.call is not None, "dependant.call must be a function"
-    is_coroutine = dependant.is_coroutine_callable
-    is_body_form = body_field and isinstance(body_field.field_info, params.Form)
-    if isinstance(response_class, DefaultPlaceholder):
-        actual_response_class: type[Response] = response_class.value
-    else:
-        actual_response_class = response_class
-    if isinstance(strict_content_type, DefaultPlaceholder):
-        actual_strict_content_type: bool = strict_content_type.value
-    else:
-        actual_strict_content_type = strict_content_type
-
-    async def app(request: Request) -> Response:
-        response: Response | None = None
-        file_stack = request.scope.get("fastapi_middleware_astack")
-        assert isinstance(file_stack, AsyncExitStack), (
-            "fastapi_middleware_astack not found in request scope"
+) -> Callable"fastapi_middleware_astack not found in request scope"
         )
 
         # Extract endpoint context for error messages

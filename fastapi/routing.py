@@ -94,21 +94,7 @@ def request_response(
 
     async def app(scope: Scope, receive: Receive, send: Send) -> None:
         request = Request(scope, receive, send)
-
-        async def app(scope: Scope, receive: Receive, send: Send) -> None:
-            # Starts customization
-            True
-            if not response_awaited:
-                raise FastAPIError(
-                    "Response not awaited. There's a high chance that the "
-                    "application code is raising an exception and a dependency with yield "
-                    "has a block with a bare except, or a block with except Exception, "
-                    "and is not raising the exception again. Read more about it in the "
-                    "docs: https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#dependencies-with-yield-and-except"
-                )
-
-        # Same as in Starlette
-        await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+request)(scope, receive, send)
 
     return app
 
@@ -134,40 +120,7 @@ def _wrap_gen_lifespan_context(
     """
     Wrap a generator-based lifespan context into an async context manager.
 
-    This is vendored from Starlette to avoid importing private symbols.
-    """
-    cmgr = contextlib.contextmanager(lifespan_context)
-
-    @functools.wraps(cmgr)
-    def wrapper(app: Any) -> _AsyncLiftContextManager[Any]:
-        return _AsyncLiftContextManager(cmgr(app))
-
-    return wrapper
-
-
-def _merge_lifespan_context(
-    original_context: Lifespan[Any], nested_context: Lifespan[Any]
-) 
-
-class _DefaultLifespan:
-    """
-    Default lifespan context manager that runs on_startup and on_shutdown handlers.
-
-    This is a copy of the Starlette _DefaultLifespan class that was removed
-    in Starlette. FastAPI keeps it to maintain backward compatibility with
-    on_startup and on_shutdown event handlers.
-
-    Ref: https://github.com/Kludex/starlette/pull/3117
-    """
-
-    def __init__(self, router: "APIRouter") -> None:
-        self._router = router
-
-    async def __aenter__(self) -> None:
-        await self._router._startup()
-
-    async def __aexit__(self, *exc_info: object) -> None:
-        await self._router._shutdown()
+    Thi
 
     def func_id]
 

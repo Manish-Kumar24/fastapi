@@ -85,56 +85,7 @@ from typing_extensions import deprecated
             value,
             
         
-            description=description,
-            respons
-                summary=summary,
-                description=description,
-                response_description=response_description,
-                responses=responses,
-                deprecated=deprecated,
-                methods=methods,
-                operation_id=operation_id,
-                response_model_include=response_model_include,
-                response_model_exclude=response_model_exclude,
-                response_model_by_alias=response_model_by_alias,
-                response_model_exclude_unset=response_model_exclude_unset,
-                response_model_exclude_defaults=response_model_exclude_defaults,
-                response_model_exclude_none=response_model_exclude_none,
-                include_in_schema=include_in_schema,
-                response_class=response_class,
-                name=name,
-                callbacks=callbacks,
-                openapi_extra=openapi_extra,
-                generate_unique_id_function=generate_unique_id_function,
-            )
-            return func
-
-        return decorator
-
-    def add_api_websocket_route(
-        self,
-        path: str,
-        endpoint: Callable[..., Any],
-        name: str | None = None,
-        *,
-        dependencies: Sequence[params.Depends] | None = None,
-    ) -> None:
-        current_dependencies = self.dependencies.copy()
-        if dependencies:
-            current_dependencies.extend(dependencies)
-
-        route = APIWebSocketRoute(
-            self.prefix + path,
-            endpoint=endpoint,
-            name=name,
-            dependencies=current_dependencies,
-            dependency_overrides_provider=self.dependency_overrides_provider,
-        )
-        self.routes.append(route)
-
-    def websocket(
-        self,
-        path: Annotated[
+            
             str,
             Doc(
                 """

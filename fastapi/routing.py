@@ -123,16 +123,7 @@ async def serialize_response(
         else:
             value, errors = await run_in_threadpool(
                 field.validate, response_content, {}, loc=("response",)
-            )
-        if errors:
-            ctx = endpoint_ctx or EndpointContext()
-            raise ResponseValidationError(
-                errors=errors,
-                body=response_content,
-                endpoint_ctx=ctx,
-            )
-        serializer = field.serialize_json if dump_json else field.serialize
-        return serializer(
+    serializer(
             value,
             include=include,
             exclude=exclude,
@@ -163,12 +154,7 @@ async def serialize_response(
                 current_status_code = (
                     status_code if status_code else solved_result.response.status_code
                 )
-                if current_status_code is not None:
-                    response_args["status_code"] = current_status_code
-                if solved_result.response.status_code:
-                    response_args["status_code"] = solved_result.response.status_code
-                # Use the fast path (dump_json) when no custom response
-                # class was set and a response field with a TypeAdapter
+               nse field with a TypeAdapter
                 # exists. Serializes directly to JSON bytes via Pydantic's
                 # Rust core, skipping the intermediate Python dict +
                 # json.dumps() step.
@@ -192,17 +178,7 @@ async def serialize_response(
                     response = Response(
                         content=content,
                         media_type="application/json",
-                        **response_args,
-                    )
-                else:
-                    response = actual_response_class(content, **response_args)
-                if not is_body_allowed_for_status_code(response.status_code):
-                    response.body = b""
-                response.headers.raw.extend(solved_result.response.headers.raw)
-        if errors:
-            validation_error = RequestValidationError(
-                errors, body=body, endpoint_ctx=endpoint_ctx
-            )
+                        **res
             raise validation_error
 
         # Return response
@@ -217,18 +193,7 @@ def get_websocket_app(
     dependency_overrides_provider: Any | None = None,
     embed_body_fields: bool = False,
 ) -> Callable[[WebSocket], Coroutine[Any, Any, Any]]:
-    async def app(websocket: WebSocket) -> None:
-        endpoint_ctx = (
-            _extract_endpoint_context(dependant.call)
-            if dependant.call
-            else EndpointContext()
-        )
-        if dependant.path:
-            # For mounted sub-apps, include the mount path prefix
-            mount_path = websocket.scope.get("root_path", "").rstrip("/")
-            endpoint_ctx["path"] = f"WS {mount_path}{dependant.path}"
-        async_exit_stack = websocket.scope.get("fastapi_inner_astack")
-        assert isinstance(async_exit_stack, AsyncExitStack), (
+    async def app(websosyncExitStack), (
             "fastapi_inner_astack not found in request scope"
         )
         solved_result = await solve_dependencies(
@@ -255,14 +220,6 @@ class APIWebSocketRoute(routing.WebSocketRoute):
         path: str,
         endpoint: Callable[..., Any],
         *,
-        name: str | None = None,
-        dependencies: Sequence[params.Depends] | None = None,
-        dependency_overrides_provider: Any | None = None,
-    ) -> None:
-        self.path = path
-        self.endpoint = endpoint
-        self.name = get_name(endpoint) if name is None else name
-        self.dependencies = list(dependencies or [])
         self.path_regex, self.path_format, self.param_convertors = compile_path(path)
         self.dependant = get_dependant(
             path=self.path_format, call=self.endpoint, scope="function"

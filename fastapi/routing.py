@@ -115,65 +115,6 @@ from typing_extensions import deprecated
                 """
                 The URL path to be used for this *path operation*.
 
-                For example, in `http://example.com/items`, the path is `/items`.
-                """
-            ),
-        ],
-        *,
-        response_model: 
-                It could be any valid Pydantic *field* type. So, it doesn't have to
-                be a Pydantic model, it could be other things, like a `list`, `dict`,
-                etc.
-
-                It will be used for:
-
-                * Documentation: the generated OpenAPI (and the UI at `/docs`) will
-                    show it as the response (JSON Schema).
-                * Serialization: you could return an arbitrary object and the
-                    `response_model` would be used to serialize that object into the
-                    corresponding JSON.
-                * Filtering: the JSON sent to the client will only contain the data
-                    (fields) defined in the `response_model`. If you returned an object
-                    that contains an attribute `password` but the `response_model` does
-                    not include that field, the JSON sent to the client would not have
-                    that `password`.
-                * Validation: whatever you return will be serialized with the
-                    `response_model`, converting any data as necessary to generate the
-                    corresponding JSON. But if the data in the object returned is not
-                    valid
-
-                Read more about it in the
-                [FastAPI docs for Response Model](https://fastapi.tiangolo.com/tutorial/response-model/).
-                """
-            ),
-        ] = Default(None),
-        status_code: Annotated[
-            int | None,
-            Doc(
-                """
-                The default status code to be used for the response.
-
-                You could override the status code by returning a response directly.
-
-                Read more about it in the
-                [FastAPI docs for Response Status Code](https://fastapi.tiangolo.com/tutorial/response-status-code/).
-                """
-            ),
-            Sequence[params.Depends] | None,
-            Doc(
-                """
-                A list of dependencies (using `Depends()`) to be applied to the
-                *path operation*.
-
-                Read more about it in the
-                [FastAPI docs for Dependencies in path operation decorators](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-in-path-operation-decorators/).
-                """
-            ),
-        ] = None,
-        summary: Annotated[
-            str | None,
-            Doc(
-                """
                 A summary for the *path operation*.
             Doc(
                 """

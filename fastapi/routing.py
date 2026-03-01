@@ -78,6 +78,8 @@ from starlette.types import AppType, ASGIApp, Lifespan, Receive, Scope, Send
 from starlette.websockets import WebSocket
 from typing_extensions import deprecated
 
+print("hello")
+print("it is in trial phase...")
 
 # Copy of starlette.routing.request_response modified to include the
 # ent, {}, loc=("response",)

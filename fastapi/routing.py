@@ -114,20 +114,6 @@ from typing_extensions import deprecated
 
         return decorator
 
-    def include_router(
-        self,
-        router: Annotated["APIRouter", Doc("The `APIRouter` to include.")],
-        *,
-        prefix: Annotated[str, Doc("An optional path prefix for the router.")] = "",
-        tags: Annotated[
-            list[str | Enum] | None,
-            Doc(
-                """
-                A list of tags to be applied to all the *path operations* in this
-                router.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
                 Read more about it in the
                 [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/).
                 """
@@ -160,24 +146,7 @@ from typing_extensions import deprecated
 
                 It will be added to the generated OpenAPI (e.g. visible at `/docs`).
 
-                Read more about it in the
-                [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/).
-                """
-            ),
-        ] = None,
-        include_in_schema: Annotated[
-            bool,
-            Doc(
-            Doc(
-                """
-                Customize the function used to generate unique IDs for the *path
-                operations* shown in the generated OpenAPI.
-
-                This is particularly useful when automatically generating clients or
-                SDKs for your API.
-
-                Read more about it in the
-                [FastAPI docs about how to Generate Clients](https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function).
+                Read more about
                 """
             ),
         ] = Default(generate_unique_id),

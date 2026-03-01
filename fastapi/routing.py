@@ -92,18 +92,7 @@ from typing_extensions import deprecated
                 WebSocket path.
                 """
         
-                        self.strict_content_type,
-                    ),
-             
-                if dependencies:
-                    current_dependencies.extend(dependencies)
-                if route.dependencies:
-                    current_dependencies.extend(route.dependencies)
-                self.add_api_websocket_route(
-                    prefix + route.path,
-                    route.endpoint,
-                    dependencies=current_dependencies,
-                    name=route.name,
+         
                 )
             elif isinstance(route, routing.WebSocketRoute):
                 self.add_websocket_route(
@@ -131,12 +120,7 @@ from typing_extensions import deprecated
             ),
         ],
         *,
-        response_model: Annotated[
-            Any,
-            Doc(
-                """
-                The type to use for the response.
-
+        response_model: 
                 It could be any valid Pydantic *field* type. So, it doesn't have to
                 be a Pydantic model, it could be other things, like a `list`, `dict`,
                 etc.
@@ -156,9 +140,7 @@ from typing_extensions import deprecated
                 * Validation: whatever you return will be serialized with the
                     `response_model`, converting any data as necessary to generate the
                     corresponding JSON. But if the data in the object returned is not
-                    valid, that would mean a violation of the contract with the client,
-                    so it's an error from the API developer. So, FastAPI will raise an
-                    error and return a 500 error code (Internal Server Error).
+                    valid
 
                 Read more about it in the
                 [FastAPI docs for Response Model](https://fastapi.tiangolo.com/tutorial/response-model/).
@@ -177,21 +159,6 @@ from typing_extensions import deprecated
                 [FastAPI docs for Response Status Code](https://fastapi.tiangolo.com/tutorial/response-status-code/).
                 """
             ),
-        ] = None,
-        tags: Annotated[
-            list[str | Enum] | None,
-            Doc(
-                """
-                A list of tags to be applied to the *path operation*.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/#tags).
-                """
-            ),
-        ] = None,
-        dependencies: Annotated[
             Sequence[params.Depends] | None,
             Doc(
                 """
@@ -208,16 +175,6 @@ from typing_extensions import deprecated
             Doc(
                 """
                 A summary for the *path operation*.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/).
-                """
-            ),
-        ] = None,
-        description: Annotated[
-            str | None,
             Doc(
                 """
                 A description for the *path operation*.

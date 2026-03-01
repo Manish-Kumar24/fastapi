@@ -99,41 +99,9 @@ from typing_extensions import deprecated
                 """
                 A name for the WebSocket. Only used internally.
                 """
-            ),
-        ] = None,
-        *,
-        dependencies: Annotated[
-            Sequence[params.Depends] | None,
-            Doc(
-                """
-                A list of dependencies (using `Depends()`) to be used for this
-                WebSocket.
-
-                Read more about it in the
-                [FastAPI docs for WebSockets](https://fastapi.tiangolo.com/advanced/websockets/).
-                """
-            ),
-        ] = None,
-    ) -> Callable[[DecoratedCallable], DecoratedCallable]:
-        """
-        Decorate a WebSocket function.
-
+        
         Read more about it in the
-        [FastAPI docs for WebSockets](https://fastapi.tiangolo.com/advanced/websockets/).
-
-        **Example**
-
-        ## Example
-
-        ```python
-        from fastapi import APIRouter, FastAPI, WebSocket
-
-        app = FastAPI()
-        router = APIRouter()
-
-        @router.websocket("/ws")
-        async def websocket_endpoint(websocket: WebSocket):
-            await websocket.accept()
+        [FastAPI 
             while True:
                 data = await websocket.receive_text()
                 await websocket.send_text(f"Message text was: {data}")
@@ -142,19 +110,6 @@ from typing_extensions import deprecated
         ```
         """
 
-        def decorator(func: DecoratedCallable) -> DecoratedCallable:
-            self.add_api_websocket_route(
-                path, func, name=name, dependencies=dependencies
-            )
-            return func
-
-        return decorator
-
-    def websocket_route(
-        self, path: str, name: str | None = None
-    ) -> Callable[[DecoratedCallable], DecoratedCallable]:
-        def decorator(func: DecoratedCallable) -> DecoratedCallable:
-            self.add_websocket_route(path, func, name=name)
             return func
 
         return decorator
@@ -193,40 +148,6 @@ from typing_extensions import deprecated
         default_response_class: Annotated[
             type[Response],
             Doc(
-                """
-                The default response class to be used.
-
-                Read more in the
-                [FastAPI docs for Custom Response - HTML, Stream, File, others](https://fastapi.tiangolo.com/advanced/custom-response/#default-response-class).
-                """
-            ),
-        ] = Default(JSONResponse),
-        responses: Annotated[
-            dict[int | str, dict[str, Any]] | None,
-            Doc(
-                """
-                Additional responses to be shown in OpenAPI.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
-                [FastAPI docs for Additional Responses in OpenAPI](https://fastapi.tiangolo.com/advanced/additional-responses/).
-
-                And in the
-                [FastAPI docs for Bigger Applications](https://fastapi.tiangolo.com/tutorial/bigger-applications/#include-an-apirouter-with-a-custom-prefix-tags-responses-and-dependencies).
-                """
-            ),
-        ] = None,
-        callbacks: Annotated[
-            list[BaseRoute] | None,
-            Doc(
-                """
-                OpenAPI callbacks that should apply to all *path operations* in this
-                router.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
-
-                Read more about it in the
                 [FastAPI docs for OpenAPI Callbacks](https://fastapi.tiangolo.com/advanced/openapi-callbacks/).
                 """
             ),
@@ -247,16 +168,6 @@ from typing_extensions import deprecated
         include_in_schema: Annotated[
             bool,
             Doc(
-                """
-                Include (or not) all the *path operations* in this router in the
-                generated OpenAPI schema.
-
-                This affects the generated OpenAPI (e.g. visible at `/docs`).
-                """
-            ),
-        ] = True,
-        generate_unique_id_function: Annotated[
-            Callable[[APIRoute], str],
             Doc(
                 """
                 Customize the function used to generate unique IDs for the *path
@@ -286,20 +197,6 @@ from typing_extensions import deprecated
         internal_router = APIRouter()
         users_router = APIRouter()
 
-        @users_router.get("/users/")
-        def read_users():
-            return [{"name": "Rick"}, {"name": "Morty"}]
-
-        internal_router.include_router(users_router)
-        app.include_router(internal_router)
-        ```
-        """
-        assert self is not router, (
-            "Cannot include the same APIRouter instance into itself. "
-            "Did you mean to include a different router?"
-        )
-        if prefix:
-            assert prefix.startswith("/"), "A path prefix must start with '/'"
             assert not prefix.endswith("/"), (
                 "A path prefix must not end with '/', as the routes will start with '/'"
             )

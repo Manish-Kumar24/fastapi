@@ -79,7 +79,7 @@ from starlette.websockets import WebSocket
 from typing_extensions import deprecated
 
 print("hello")
-print("it is in trial phase...")
+print("this is in trail phase, we'll improve it later")
 
 # Copy of starlette.routing.request_response modified to include the
 # ent, {}, loc=("response",)

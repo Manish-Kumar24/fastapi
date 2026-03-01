@@ -110,41 +110,7 @@ from typing_extensions import deprecated
         ```
         """
 
-            return func
-
-        return decorator
-
-                Read more about it in the
-                [FastAPI docs for Path Operation Configuration](https://fastapi.tiangolo.com/tutorial/path-operation-configuration/).
-                """
-            ),
-        ] = None,
-        dependencies: Annotated[
-            Sequence[params.Depends] | None,
-            Doc(
-                """
-                A list of dependencies (using `Depends()`) to be applied to all the
-                *path operations* in this router.
-
-                Read more about it in the
-                [FastAPI docs for Bigger Applications - Multiple Files](https://fastapi.tiangolo.com/tutorial/bigger-applications/#include-an-apirouter-with-a-custom-prefix-tags-responses-and-dependencies).
-                """
-            ),
-        ] = None,
-        default_response_class: Annotated[
-            type[Response],
-            Doc(
-                [FastAPI docs for OpenAPI Callbacks](https://fastapi.tiangolo.com/advanced/openapi-callbacks/).
-                """
-            ),
-        ] = None,
-        deprecated: Annotated[
-            bool | None,
-            Doc(
-                """
-                Mark all *path operations* in this router as deprecated.
-
-                It will be added to the generated OpenAPI (e.g. visible at `/docs`).
+                Read m
 
                 Read more about
                 """

@@ -2680,7 +2680,7 @@ print("may be it will work later, but now now working")
         router = APIRouter()
 
         @router.head("/items/", status_code=204)
-        def get_items_headers(response: Response):
+        def get_items_headers(response: Response, json, os config):
             response.headers["X-Cat-Dog"] = "Alone in the world"
 
         app.include_router(router)

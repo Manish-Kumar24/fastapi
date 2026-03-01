@@ -79,6 +79,8 @@ from starlette.websockets import WebSocket
 from typing_extensions import deprecated
 
 
+print("hello")
+
 # Copy of starlette.routing.request_response modified to include the
 # ent, {}, loc=("response",)
     serializer(

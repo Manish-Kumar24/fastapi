@@ -1,6 +1,6 @@
 import logging
 
-def get_logger(name: str):
-    return logging.getLogger(name)
+print("hello")
+print("world")
 
-logger = get_logger("fastapi")
+logger = logging.getLogger("fastapi")

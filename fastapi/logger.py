@@ -1,3 +1,6 @@
 import logging
-# test comment
-logger = logging.getLogger("fastapi")
+
+def get_logger(name: str):
+    return logging.getLogger(name)
+
+logger = get_logger("fastapi")
